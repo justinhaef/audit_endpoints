@@ -24,9 +24,12 @@ class Cleaner:
         cleaned_diff['differences'] = {}
         
         # loop over the differences and remove items
-        for key, value in self.differences['difference'].items():
-            if key not in self.removable_list:
-                key = key.split("root['items']")[1]
-                cleaned_diff['differences'][key] = value
+        try:
+            for key, value in self.differences['difference'].items():
+                if key not in self.removable_list:
+                    key = key.split("root['items']")[1]
+                    cleaned_diff['differences'][key] = value
+        except Exception as e:
+            log.error(f'Error cleaning {self.differences["filename"]}: {e}')
         return cleaned_diff
             
