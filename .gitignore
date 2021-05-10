@@ -2,6 +2,8 @@
 .env
 *.pyc
 .vscode
+.DS_Store
+app.log
 
 Endpoint/DX80/Gold/*
 Endpoint/DX80/InstallBase/*
