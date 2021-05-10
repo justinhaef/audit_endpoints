@@ -5,6 +5,7 @@ from datetime import datetime
 from tqdm import tqdm
 from pathlib import Path
 from parser import Parser
+from cleaner import Cleaner
 
 # pip install deepdiff
 from deepdiff import DeepDiff
@@ -75,7 +76,9 @@ def main(endpoint_models: list):
 
             config_diff = audit.compare(endpoint_json, endpoint.name)
             
-            audit_list.append(config_diff)
+            cleaner = Cleaner(config_diff)
+            cleaned = cleaner.clean()
+            audit_list.append(cleaned)
     return audit_list
 
 
