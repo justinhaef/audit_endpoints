@@ -78,7 +78,7 @@ def main(endpoint_models: list):
             
             cleaner = Cleaner(config_diff)
             cleaned = cleaner.clean()
-            audit_list.append(cleaned)
+            audit_list.append({f"{model}": cleaned})
     return audit_list
 
 
@@ -115,6 +115,7 @@ if __name__ == "__main__":
 
     if result:
         today = datetime.today()
+       
         with open(Path(f'./output/{today.date()}.json'), 'w') as outfile:
             json.dump(result, outfile, indent=4)
         print(f'Complete')
