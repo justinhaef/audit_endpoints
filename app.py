@@ -6,6 +6,7 @@ from tqdm import tqdm
 from pathlib import Path
 from parser import Parser
 from cleaner import Cleaner
+from converter import Converter
 
 # pip install deepdiff
 from deepdiff import DeepDiff
@@ -79,6 +80,10 @@ def main(endpoint_models: list):
             cleaner = Cleaner(config_diff)
             cleaned = cleaner.clean()
             audit_list.append({f"{model}": cleaned})
+    
+    today = datetime.today()
+    convert = Converter(audit_list)
+    convert.to_csv(Path(f'./output/{today.date()}.csv'))
     return audit_list
 
 
@@ -115,9 +120,12 @@ if __name__ == "__main__":
 
     if result:
         today = datetime.today()
-       
+        # convert = Convert(result)
+        # convert.to_csv(Path(f'./output/{today.date()}.csv'))
         with open(Path(f'./output/{today.date()}.json'), 'w') as outfile:
             json.dump(result, outfile, indent=4)
-        print(f'Complete')
+
+        
+        print(f'Audit complete.')
     else:
-        print(f'There was no result from the audit.')
+        print(f'There were no results from the audit.')
